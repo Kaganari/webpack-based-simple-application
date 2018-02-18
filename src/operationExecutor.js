@@ -27,10 +27,9 @@ class OperationExecutor {
    * @returns object that contains source object and his modified clone
    */
   firstTaskExecute(arg) {
-    /**
-     * Place your code here
-     */
-    return null /* variable with result */;
+    let clone = Object.assign({}, arg);
+    clone.obj1.firstName = "Andrey";
+    return clone; /* variable with result */;
   }
 
   /**
@@ -40,10 +39,9 @@ class OperationExecutor {
    * @returns object that contains source objects and their combined and modified clone
    */
   secondTaskExecute(arg) {
-    /**
-     * Place your code here
-     */
-    return null /* variable with result */;
+    let combinedObject = {...arg.obj1, ...arg.obj2};
+    combinedObject.a = 2;
+    return combinedObject /* variable with result */;
   }
 
   /**
@@ -53,10 +51,9 @@ class OperationExecutor {
    * @returns object that contains modified source object
    */
   thirdTaskExecute(arg) {
-    /**
-     * Place your code here
-     */
-    return null /* variable with result */;
+    let clone = Object.assign({}, arg);
+    clone.obj1.relatives.forEach(relative => relative.gender = "unknown");
+    return clone; /* variable with result */;
   }
 
   /**
@@ -66,10 +63,10 @@ class OperationExecutor {
    * @returns object that contains array of string with female relatives
    */
   fourthTaskExecute(arg) {
-    /**
-     * Place your code here
-     */
-    return null /* variable with result */;
+    let filtered = arg.obj1.relatives.filter(relative => relative.gender === "female");
+    let femRelatives = [];
+    filtered.forEach(female => femRelatives.push(`Hello, ${female.firstName}!`));
+    return femRelatives; /* variable with result */;
   }
 }
 
