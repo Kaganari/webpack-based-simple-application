@@ -27,9 +27,9 @@ class OperationExecutor {
    * @returns object that contains source object and his modified clone
    */
   firstTaskExecute(arg) {
-    let clone = Object.assign({}, arg);
-    clone.obj1.firstName = "Andrey";
-    return clone; /* variable with result */;
+    let clone = Object.assign({}, arg.obj1);
+    clone.firstName = "Andrey";
+    return {arg, clone}; /* variable with result */;
   }
 
   /**
@@ -41,7 +41,7 @@ class OperationExecutor {
   secondTaskExecute(arg) {
     let combinedObject = {...arg.obj1, ...arg.obj2};
     combinedObject.a = 2;
-    return combinedObject /* variable with result */;
+    return {arg,combinedObject} /* variable with result */;
   }
 
   /**
@@ -52,7 +52,10 @@ class OperationExecutor {
    */
   thirdTaskExecute(arg) {
     let clone = Object.assign({}, arg);
-    clone.obj1.relatives.forEach(relative => relative.gender = "unknown");
+    var gender = function(lastName) {
+      return lastName[lastName.length-1] === "a" ? "female" : "male";
+    }
+    clone.obj1.relatives.forEach(relative => {relative.gender = gender(relative.lastName)});
     return clone; /* variable with result */;
   }
 
@@ -63,10 +66,9 @@ class OperationExecutor {
    * @returns object that contains array of string with female relatives
    */
   fourthTaskExecute(arg) {
-    let filtered = arg.obj1.relatives.filter(relative => relative.gender === "female");
-    let femRelatives = [];
-    filtered.forEach(female => femRelatives.push(`Hello, ${female.firstName}!`));
-    return femRelatives; /* variable with result */;
+    return arg.obj1.relatives.reduce((greetings,str) => {
+      str.gender === "female" ? greetings = [...greetings, (`Hello there, ${str.firstName}.`)] : null;
+      return greetings;}, []) /* variable with result */;
   }
 }
 
